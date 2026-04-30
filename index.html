@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predicción Pisos Madrid</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+
+    <div class="bg-white p-8 rounded-xl shadow-2xl w-full max-w-2xl">
+        <h1 class="text-2xl font-bold text-blue-600 mb-6 text-center">Calculadora de Precio IA - Madrid</h1>
+        
+        <form id="priceForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Zona -->
+            <div class="md:col-span-2">
+                <label class="block text-sm font-medium text-gray-700">Zona de Madrid</label>
+                <select id="zona" class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                    <option value="retiro">Retiro</option>
+                    <option value="salamanca">Salamanca</option>
+                    <option value="centro">Centro</option>
+                    <option value="chamberi">Chamberí</option>
+                    <option value="arganzuela">Arganzuela</option>
+                    <!-- Añade el resto de zonas de tu diccionario aquí -->
+                </select>
+            </div>
+
+            <!-- Metros y Habitaciones -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Metros Cuadrados</label>
+                <input type="number" id="metros" value="80" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Habitaciones</label>
+                <input type="number" id="habitaciones" value="2" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+            </div>
+
+            <!-- Baños y Planta -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Baños</label>
+                <input type="number" id="baños" value="1" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Nº Planta</label>
+                <input type="number" id="planta_num" value="1" class="mt-1 block w-full p-2 border border-gray-300 rounded-md">
+            </div>
+
+            <!-- Toggles / Extras -->
+            <div class="flex items-center space-x-2">
+                <input type="checkbox" id="ascensor_S" class="h-4 w-4 text-blue-600">
+                <label class="text-sm text-gray-700">Ascensor</label>
+            </div>
+            <div class="flex items-center space-x-2">
+                <input type="checkbox" id="es_exterior" class="h-4 w-4 text-blue-600">
+                <label class="text-sm text-gray-700">Exterior</label>
+            </div>
+            <div class="flex items-center space-x-2">
+                <input type="checkbox" id="extra_garaje" class="h-4 w-4 text-blue-600">
+                <label class="text-sm text-gray-700">Garaje</label>
+            </div>
+            <div class="flex items-center space-x-2">
+                <input type="checkbox" id="extra_reformado" class="h-4 w-4 text-blue-600">
+                <label class="text-sm text-gray-700">Reformado</label>
+            </div>
+
+            <!-- Botón -->
+            <div class="md:col-span-2 mt-4">
+                <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition">
+                    Calcular Precio Estimado
+                </button>
+            </div>
+        </form>
+
+        <!-- Resultado -->
+        <div id="result" class="mt-8 hidden p-4 bg-blue-50 border-2 border-blue-200 rounded-lg text-center">
+            <p class="text-gray-600 text-sm uppercase font-bold tracking-wider">Precio Estimado</p>
+            <p id="priceValue" class="text-3xl font-extrabold text-blue-800 mt-1">-- €</p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('priceForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Recoger datos
+            const metros = parseFloat(document.getElementById('metros').value);
+            const habs = parseInt(document.getElementById('habitaciones').value);
+            const baños = parseInt(document.getElementById('baños').value);
+
+            const payload = {
+                metros: metros,
+                habitaciones: habs,
+                baños: baños,
+                zona: document.getElementById('zona').value,
+                ascensor_S: document.getElementById('ascensor_S').checked ? 1 : 0,
+                es_exterior: document.getElementById('es_exterior').checked ? 1 : 0,
+                planta_num: parseInt(document.getElementById('planta_num').value),
+                extra_piscina: 0, // Simplificado para el ejemplo
+                extra_terraza: 0,
+                extra_garaje: document.getElementById('extra_garaje').checked ? 1 : 0,
+                extra_reformado: document.getElementById('extra_reformado').checked ? 1 : 0,
+                metros_por_hab: metros / (habs || 1),
+                ratio_banos: baños / (habs || 1)
+            };
+
+            try {
+                const response = await fetch('http://127.0.0.1:8000/prever', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+                
+                if (response.ok) {
+                    document.getElementById('result').classList.remove('hidden');
+                    document.getElementById('priceValue').innerText = 
+                        new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(result["Precio estimado"]);
+                } else {
+                    alert("Error: " + JSON.stringify(result.detail));
+                }
+            } catch (error) {
+                alert("No se pudo conectar con el servidor (¿Está corriendo uvicorn?)");
+            }
+        });
+    </script>
+</body>
+</html>
