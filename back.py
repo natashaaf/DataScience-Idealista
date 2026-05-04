@@ -24,7 +24,7 @@ app.add_middleware(
 MODEL_PATH = Path(__file__).resolve().parent / 'modelo_idealista_v1.joblib'
 model = joblib.load(MODEL_PATH)
 
-app = FastAPI()
+
 
 class DatosInmueble(BaseModel):
     metros: float
