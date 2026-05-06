@@ -1,0 +1,2018 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ProphetAI — Predicción de Precios Inmobiliarios · Madrid</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Syne:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --ink: #0f0e0c;
+      --paper: #f5f2eb;
+      --cream: #ede9de;
+      --accent: #c8502a;
+      --accent-light: #f0e8e3;
+      --muted: #6b6760;
+      --border: rgba(15, 14, 12, 0.12);
+      --border-strong: rgba(15, 14, 12, 0.25);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Syne', sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ───────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(245, 242, 235, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2.5rem;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--ink);
+    }
+
+    .nav-logo {
+      width: 32px;
+      height: 32px;
+      background: var(--ink);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav-logo svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .brand-name {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 1.2rem;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+    }
+
+    .brand-name span {
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--ink);
+    }
+
+    .nav-cta {
+      background: var(--ink) !important;
+      color: var(--paper) !important;
+      padding: 0.5rem 1.2rem;
+      border-radius: 6px;
+    }
+
+    .nav-cta:hover {
+      opacity: 0.85;
+    }
+
+    /* ── HERO ──────────────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      padding: 120px 2.5rem 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-grid-lines {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 80px 80px;
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--cream);
+      border: 1px solid var(--border-strong);
+      padding: 0.4rem 1rem;
+      border-radius: 100px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 2rem;
+      width: fit-content;
+    }
+
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 0.6;
+        transform: scale(0.8);
+      }
+    }
+
+    .hero-title {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: clamp(3rem, 7vw, 6.5rem);
+      font-weight: 300;
+      line-height: 1.0;
+      letter-spacing: -0.03em;
+      max-width: 900px;
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-subtitle {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 520px;
+      line-height: 1.65;
+      margin-bottom: 3rem;
+      font-weight: 400;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 0.9rem 2rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      transition: opacity 0.2s, transform 0.1s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary:hover {
+      opacity: 0.85;
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      color: var(--ink);
+      padding: 0.9rem 1.5rem;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      border: 1px solid var(--border-strong);
+      border-radius: 8px;
+      transition: background 0.2s;
+    }
+
+    .btn-secondary:hover {
+      background: var(--cream);
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 0;
+      margin-top: 5rem;
+      border: 1px solid var(--border-strong);
+      border-radius: 12px;
+      overflow: hidden;
+      width: fit-content;
+      background: var(--cream);
+    }
+
+    .stat-item {
+      padding: 1.4rem 2.5rem;
+      border-right: 1px solid var(--border-strong);
+    }
+
+    .stat-item:last-child {
+      border-right: none;
+    }
+
+    .stat-num {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 2.2rem;
+      font-weight: 400;
+      color: var(--ink);
+      line-height: 1;
+    }
+
+    .stat-num span {
+      color: var(--accent);
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: 4px;
+      font-weight: 500;
+    }
+
+    /* ── SECTION SHELL ─────────────────────────────── */
+    section {
+      padding: 6rem 2.5rem;
+    }
+
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-label::before {
+      content: '';
+      width: 24px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .section-title {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      max-width: 700px;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-title em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .section-desc {
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.7;
+      max-width: 580px;
+    }
+
+    /* ── DIVIDER ───────────────────────────────────── */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 0 2.5rem;
+    }
+
+    /* ── PIPELINE / METHODOLOGY ────────────────────── */
+    #metodologia {
+      background: var(--cream);
+    }
+
+    .pipeline {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1px;
+      background: var(--border-strong);
+      border: 1px solid var(--border-strong);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-top: 4rem;
+    }
+
+    .pipe-step {
+      background: var(--cream);
+      padding: 2rem;
+      transition: background 0.2s;
+    }
+
+    .pipe-step:hover {
+      background: #e8e4d8;
+    }
+
+    .pipe-num {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 3rem;
+      font-weight: 300;
+      color: var(--border-strong);
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+
+    .pipe-title {
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 0.02em;
+      margin-bottom: 0.6rem;
+    }
+
+    .pipe-desc {
+      font-size: 0.87rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .pipe-tag {
+      display: inline-block;
+      margin-top: 1rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      background: var(--ink);
+      color: var(--paper);
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    /* ── VARIABLES ─────────────────────────────────── */
+    #variables {
+      background: var(--paper);
+    }
+
+    .vars-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      margin-top: 4rem;
+      align-items: start;
+    }
+
+    .corr-table {
+      border: 1px solid var(--border-strong);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .corr-row {
+      display: flex;
+      align-items: center;
+      padding: 0.85rem 1.2rem;
+      border-bottom: 1px solid var(--border);
+      gap: 1rem;
+    }
+
+    .corr-row:last-child {
+      border-bottom: none;
+    }
+
+    .corr-var {
+      font-size: 0.85rem;
+      font-weight: 600;
+      min-width: 150px;
+      font-family: 'Syne', sans-serif;
+    }
+
+    .corr-bar-wrap {
+      flex: 1;
+      height: 6px;
+      background: var(--cream);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .corr-bar {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 3px;
+      transition: width 1s ease;
+    }
+
+    .corr-val {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--muted);
+      min-width: 40px;
+      text-align: right;
+    }
+
+    .importance-chart {
+      border: 1px solid var(--border-strong);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .imp-header {
+      padding: 1rem 1.2rem;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .imp-row {
+      display: flex;
+      align-items: center;
+      padding: 0.7rem 1.2rem;
+      border-bottom: 1px solid var(--border);
+      gap: 1rem;
+    }
+
+    .imp-row:last-child {
+      border-bottom: none;
+    }
+
+    .imp-var {
+      font-size: 0.83rem;
+      font-weight: 600;
+      min-width: 140px;
+    }
+
+    .imp-bar-wrap {
+      flex: 1;
+      height: 8px;
+      background: var(--cream);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .imp-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--ink), #3d3a35);
+      border-radius: 4px;
+    }
+
+    .imp-pct {
+      font-size: 0.82rem;
+      font-weight: 700;
+      min-width: 48px;
+      text-align: right;
+    }
+
+    /* ── MODEL CARD ────────────────────────────────── */
+    #modelo {
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    #modelo .section-label {
+      color: #c8a47a;
+    }
+
+    #modelo .section-label::before {
+      background: #c8a47a;
+    }
+
+    #modelo .section-title {
+      color: var(--paper);
+    }
+
+    #modelo .section-desc {
+      color: rgba(245, 242, 235, 0.6);
+    }
+
+    .model-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+      margin-top: 4rem;
+    }
+
+    .model-card {
+      border: 1px solid rgba(245, 242, 235, 0.15);
+      border-radius: 12px;
+      padding: 1.8rem;
+      background: rgba(245, 242, 235, 0.04);
+      transition: background 0.2s;
+    }
+
+    .model-card:hover {
+      background: rgba(245, 242, 235, 0.08);
+    }
+
+    .model-card-icon {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .model-card-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: rgba(245, 242, 235, 0.5);
+      margin-bottom: 0.5rem;
+    }
+
+    .model-card-value {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 2rem;
+      font-weight: 400;
+      color: var(--paper);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+
+    .model-card-value .accent {
+      color: #c8a47a;
+    }
+
+    .model-card-desc {
+      font-size: 0.82rem;
+      color: rgba(245, 242, 235, 0.5);
+      line-height: 1.5;
+    }
+
+    .xgb-highlight {
+      margin-top: 4rem;
+      border: 1px solid rgba(245, 242, 235, 0.15);
+      border-radius: 16px;
+      padding: 2.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .xgb-title {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 1.8rem;
+      font-weight: 300;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    .xgb-title em {
+      font-style: italic;
+      color: #c8a47a;
+    }
+
+    .xgb-desc {
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: rgba(245, 242, 235, 0.65);
+    }
+
+    .xgb-params {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: rgba(245, 242, 235, 0.1);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .xgb-param {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.75rem 1.2rem;
+      background: rgba(15, 14, 12, 0.4);
+      font-size: 0.85rem;
+    }
+
+    .xgb-param-key {
+      color: rgba(245, 242, 235, 0.5);
+      font-weight: 400;
+    }
+
+    .xgb-param-val {
+      color: var(--paper);
+      font-weight: 700;
+      font-family: 'Syne', monospace;
+    }
+
+    /* ── CALCULATOR ────────────────────────────────── */
+    #calculadora {
+      background: var(--paper);
+    }
+
+    .calc-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+      margin-top: 4rem;
+    }
+
+    .calc-form-card {
+      border: 1px solid var(--border-strong);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .calc-form-header {
+      padding: 1.2rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--cream);
+    }
+
+    .form-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .dot-red {
+      background: #ff5f57;
+    }
+
+    .dot-yellow {
+      background: #febc2e;
+    }
+
+    .dot-green {
+      background: #28c840;
+    }
+
+    .calc-form-body {
+      padding: 1.5rem;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-field.full {
+      grid-column: 1 / -1;
+    }
+
+    .form-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .form-input {
+      padding: 10px 12px;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.9rem;
+      color: var(--ink);
+      background: var(--paper);
+      border: 1px solid var(--border-strong);
+      border-radius: 8px;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      -webkit-appearance: none;
+    }
+
+    .form-input:focus {
+      border-color: var(--ink);
+      box-shadow: 0 0 0 3px rgba(15, 14, 12, 0.08);
+    }
+
+    .toggles-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .toggle-card {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      background: var(--paper);
+      transition: all 0.15s;
+      user-select: none;
+    }
+
+    .toggle-card:hover {
+      border-color: var(--border-strong);
+      background: var(--cream);
+    }
+
+    .toggle-card.on {
+      border-color: var(--ink);
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    .toggle-cb {
+      width: 16px;
+      height: 16px;
+      border-radius: 4px;
+      border: 1.5px solid currentColor;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      opacity: 0.5;
+      font-size: 10px;
+      font-weight: 900;
+    }
+
+    .toggle-card.on .toggle-cb {
+      opacity: 1;
+    }
+
+    .toggle-text {
+      font-size: 0.83rem;
+      font-weight: 500;
+    }
+
+    .toggle-icon {
+      margin-left: auto;
+      font-size: 13px;
+    }
+
+    .btn-calc {
+      width: 100%;
+      padding: 13px;
+      background: var(--accent);
+      color: white;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: opacity 0.15s, transform 0.1s;
+    }
+
+    .btn-calc:hover {
+      opacity: 0.9;
+    }
+
+    .btn-calc:active {
+      transform: scale(0.99);
+    }
+
+    .btn-calc:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* Result panel */
+    .result-panel {
+      border: 1px solid var(--border-strong);
+      border-radius: 16px;
+      overflow: hidden;
+      position: sticky;
+      top: 80px;
+    }
+
+    .result-hero {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 2.5rem;
+      text-align: center;
+    }
+
+    .result-label-sm {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(245, 242, 235, 0.5);
+      margin-bottom: 0.5rem;
+    }
+
+    .result-price {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 3.2rem;
+      font-weight: 300;
+      color: var(--paper);
+      line-height: 1;
+      margin-bottom: 0.3rem;
+      letter-spacing: -0.02em;
+    }
+
+    .result-sqm {
+      font-size: 0.9rem;
+      color: rgba(245, 242, 235, 0.5);
+    }
+
+    .result-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      padding: 3rem;
+    }
+
+    .placeholder-icon {
+      width: 56px;
+      height: 56px;
+      border: 1.5px dashed rgba(245, 242, 235, 0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+
+    .placeholder-text {
+      font-size: 0.9rem;
+      color: rgba(245, 242, 235, 0.4);
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    .result-body {
+      padding: 1.5rem;
+      background: var(--cream);
+    }
+
+    .result-meta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .meta-card {
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.8rem 1rem;
+    }
+
+    .meta-card-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 3px;
+    }
+
+    .meta-card-val {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .result-disclaimer {
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.5;
+      border-top: 1px solid var(--border);
+      padding-top: 1rem;
+    }
+
+    .error-box {
+      margin-top: 12px;
+      padding: 10px 14px;
+      background: #fdf0ee;
+      border: 1px solid #e8c5bc;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      color: var(--accent);
+      display: none;
+    }
+
+    .error-box.show {
+      display: block;
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      vertical-align: middle;
+      margin-right: 6px;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* ── DATOS ─────────────────────────────────────── */
+    #datos {
+      background: var(--cream);
+    }
+
+    .data-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-top: 4rem;
+    }
+
+    .data-card {
+      background: var(--paper);
+      border: 1px solid var(--border-strong);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+
+    .data-card-num {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 2.6rem;
+      font-weight: 300;
+      color: var(--ink);
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+
+    .data-card-num span {
+      color: var(--accent);
+    }
+
+    .data-card-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-top: 0.4rem;
+    }
+
+    .data-card-sub {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 0.8rem;
+      line-height: 1.5;
+    }
+
+    .zonas-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 2rem;
+    }
+
+    .zona-tag {
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: 100px;
+      border: 1px solid var(--border-strong);
+      background: var(--paper);
+      color: var(--ink);
+      letter-spacing: 0.02em;
+    }
+
+    /* ── RESULTADOS / MÉTRICAS ─────────────────────── */
+    #resultados {
+      background: var(--paper);
+    }
+
+    .metrics-showcase {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border-strong);
+      border: 1px solid var(--border-strong);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-top: 4rem;
+    }
+
+    .metric-block {
+      background: var(--paper);
+      padding: 2.5rem 2rem;
+      text-align: center;
+    }
+
+    .metric-val {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 3.5rem;
+      font-weight: 300;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+    }
+
+    .metric-val span {
+      color: var(--accent);
+    }
+
+    .metric-name {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .metric-note {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    .scatter-visual {
+      margin-top: 4rem;
+      border: 1px solid var(--border-strong);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--cream);
+      padding: 2rem;
+    }
+
+    .scatter-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .scatter-svg {
+      width: 100%;
+      height: 280px;
+    }
+
+    /* ── FOOTER ────────────────────────────────────── */
+    footer {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 4rem 2.5rem 2rem;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 3rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid rgba(245, 242, 235, 0.1);
+      margin-bottom: 2rem;
+    }
+
+    .footer-brand .brand-name {
+      color: var(--paper);
+    }
+
+    .footer-brand p {
+      font-size: 0.85rem;
+      color: rgba(245, 242, 235, 0.5);
+      margin-top: 0.8rem;
+      line-height: 1.6;
+      max-width: 240px;
+    }
+
+    .footer-col h4 {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(245, 242, 235, 0.4);
+      margin-bottom: 1rem;
+    }
+
+    .footer-col ul {
+      list-style: none;
+    }
+
+    .footer-col li {
+      margin-bottom: 0.6rem;
+      font-size: 0.87rem;
+      color: rgba(245, 242, 235, 0.65);
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      color: rgba(245, 242, 235, 0.3);
+    }
+
+    .footer-tech-stack {
+      display: flex;
+      gap: 0.8rem;
+    }
+
+    .tech-pill {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      background: rgba(245, 242, 235, 0.08);
+      border: 1px solid rgba(245, 242, 235, 0.12);
+      color: rgba(245, 242, 235, 0.5);
+      padding: 3px 9px;
+      border-radius: 100px;
+    }
+
+    /* ── RESPONSIVE ────────────────────────────────── */
+    @media (max-width: 900px) {
+
+      .vars-layout,
+      .calc-wrapper,
+      .xgb-highlight,
+      .footer-top {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .metrics-showcase {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-stats {
+        flex-wrap: wrap;
+      }
+
+      .nav-links {
+        display: none;
+      }
+    }
+
+    /* ── ANIMATIONS ────────────────────────────────── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ══ NAV ══════════════════════════════════════════ -->
+  <nav>
+    <a href="#hero" class="nav-brand">
+      <div class="nav-logo">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke="#f5f2eb" stroke-width="1.5"
+            stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M9 22V12h6v10" stroke="#f5f2eb" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </div>
+      <span class="brand-name">Prophet<span>AI</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#metodologia">Metodología</a></li>
+      <li><a href="#variables">Variables</a></li>
+      <li><a href="#modelo">Modelo</a></li>
+      <li><a href="#resultados">Resultados</a></li>
+      <li><a href="#calculadora" class="nav-cta">Calcular precio →</a></li>
+    </ul>
+  </nav>
+
+  <!-- ══ HERO ══════════════════════════════════════════ -->
+  <section id="hero">
+    <div class="hero-grid-lines"></div>
+    <div class="hero-badge">
+      <div class="badge-dot"></div>
+      Trabajo Fin de Curso · 2026
+    </div>
+    <h1 class="hero-title">
+      Predicción de precios<br><em>inmobiliarios</em> en Madrid<br>con inteligencia artificial
+    </h1>
+    <p class="hero-subtitle">
+      Un sistema de Machine Learning basado en XGBoost entrenado con más de 11.000 anuncios reales de Idealista capaz de
+      estimar el precio de venta de cualquier piso en Madrid con un R² de 0.86.
+    </p>
+    <div class="hero-actions">
+      <a href="#calculadora" class="btn-primary">Probar el modelo ↗</a>
+      <a href="#metodologia" class="btn-secondary">Ver metodología</a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">11<span>.</span>826</div>
+        <div class="stat-label">Anuncios analizados</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">0<span>.</span>86</div>
+        <div class="stat-label">R² Score</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">21</div>
+        <div class="stat-label">Distritos de Madrid</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">13</div>
+        <div class="stat-label">Variables del modelo</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ══ METODOLOGÍA ═══════════════════════════════════ -->
+  <section id="metodologia">
+    <div class="section-label">Metodología</div>
+    <h2 class="section-title">Un pipeline completo de <em>ciencia de datos</em></h2>
+    <p class="section-desc">Desde la extracción de los datos hasta el despliegue de una API REST funcional, el proyecto
+      cubre todas las fases del ciclo de vida de un modelo de Machine Learning.</p>
+
+    <div class="pipeline fade-in">
+      <div class="pipe-step">
+        <div class="pipe-num">01</div>
+        <div class="pipe-title">Scraping & Dataset</div>
+        <div class="pipe-desc">Extracción de 11.826 anuncios de Idealista.com con datos de precio, localización,
+          superficie, habitaciones, baños y características adicionales.</div>
+        <span class="pipe-tag">Pandas · CSV</span>
+      </div>
+      <div class="pipe-step">
+        <div class="pipe-num">02</div>
+        <div class="pipe-title">Limpieza de datos</div>
+        <div class="pipe-desc">Eliminación de duplicados, tratamiento de outliers (pisos con más de 10 habitaciones),
+          imputación de valores nulos con la mediana y filtrado de precios inválidos.</div>
+        <span class="pipe-tag">Numpy · Seaborn</span>
+      </div>
+      <div class="pipe-step">
+        <div class="pipe-num">03</div>
+        <div class="pipe-title">Feature Engineering</div>
+        <div class="pipe-desc">Creación de 5 nuevas variables derivadas: zona_codificada (Target Encoding), extras desde
+          texto libre (NLP), metros_por_hab y ratio_banos.</div>
+        <span class="pipe-tag">Target Encoder</span>
+      </div>
+      <div class="pipe-step">
+        <div class="pipe-num">04</div>
+        <div class="pipe-title">Entrenamiento XGBoost</div>
+        <div class="pipe-desc">Modelo de Gradient Boosting entrenado con división 80/20 train-test. Selección del
+          algoritmo tras comparativa frente a Random Forest y regresión lineal.</div>
+        <span class="pipe-tag">XGBoost · Sklearn</span>
+      </div>
+      <div class="pipe-step">
+        <div class="pipe-num">05</div>
+        <div class="pipe-title">Evaluación</div>
+        <div class="pipe-desc">Evaluación con R² Score, MAE y análisis de importancia de variables. Gráfico de
+          dispersión precios reales vs. predicciones para validación visual.</div>
+        <span class="pipe-tag">Sklearn Metrics</span>
+      </div>
+      <div class="pipe-step">
+        <div class="pipe-num">06</div>
+        <div class="pipe-title">API & Despliegue</div>
+        <div class="pipe-desc">Serialización del modelo con joblib y exposición mediante una API REST construida con
+          FastAPI + Uvicorn. Frontend en HTML/CSS/JS puro.</div>
+        <span class="pipe-tag">FastAPI · Joblib</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ══ VARIABLES ═════════════════════════════════════ -->
+  <section id="variables">
+    <div class="section-label">Variables del modelo</div>
+    <h2 class="section-title">Qué <em>explica</em> el precio de un piso</h2>
+    <p class="section-desc">La correlación de Pearson reveló qué variables tienen mayor relación lineal con el precio.
+      Los metros cuadrados lideran con 0.79, seguidos de los baños y la zona.</p>
+
+    <div class="vars-layout">
+      <div>
+        <div
+          style="font-size: 0.72rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem;">
+          Correlación con el precio de venta</div>
+        <div class="corr-table fade-in">
+          <div class="corr-row">
+            <span class="corr-var">metros</span>
+            <div class="corr-bar-wrap">
+              <div class="corr-bar" style="width: 79%"></div>
+            </div>
+            <span class="corr-val">0.79</span>
+          </div>
+          <div class="corr-row">
+            <span class="corr-var">baños</span>
+            <div class="corr-bar-wrap">
+              <div class="corr-bar" style="width: 70%"></div>
+            </div>
+            <span class="corr-val">0.70</span>
+          </div>
+          <div class="corr-row">
+            <span class="corr-var">zona_codificada</span>
+            <div class="corr-bar-wrap">
+              <div class="corr-bar" style="width: 58%"></div>
+            </div>
+            <span class="corr-val">0.58</span>
+          </div>
+          <div class="corr-row">
+            <span class="corr-var">habitaciones</span>
+            <div class="corr-bar-wrap">
+              <div class="corr-bar" style="width: 43%"></div>
+            </div>
+            <span class="corr-val">0.43</span>
+          </div>
+          <div class="corr-row">
+            <span class="corr-var">ascensor_S</span>
+            <div class="corr-bar-wrap">
+              <div class="corr-bar" style="width: 28%"></div>
+            </div>
+            <span class="corr-val">0.28</span>
+          </div>
+          <div class="corr-row">
+            <span class="corr-var">planta_num</span>
+            <div class="corr-bar-wrap">
+              <div class="corr-bar" style="width: 21%"></div>
+            </div>
+            <span class="corr-val">0.21</span>
+          </div>
+          <div class="corr-row">
+            <span class="corr-var">es_exterior</span>
+            <div class="corr-bar-wrap">
+              <div class="corr-bar" style="width: 14%"></div>
+            </div>
+            <span class="corr-val">0.14</span>
+          </div>
+          <div class="corr-row">
+            <span class="corr-var">extra_terraza</span>
+            <div class="corr-bar-wrap">
+              <div class="corr-bar" style="width: 2%"></div>
+            </div>
+            <span class="corr-val">0.02</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div
+          style="font-size: 0.72rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem;">
+          Importancia de variables según XGBoost</div>
+        <div class="importance-chart fade-in">
+          <div class="imp-header">Feature importance del modelo entrenado</div>
+          <div class="imp-row">
+            <span class="imp-var">metros</span>
+            <div class="imp-bar-wrap">
+              <div class="imp-bar" style="width: 100%"></div>
+            </div>
+            <span class="imp-pct">48.82%</span>
+          </div>
+          <div class="imp-row">
+            <span class="imp-var">zona_codificada</span>
+            <div class="imp-bar-wrap">
+              <div class="imp-bar" style="width: 40%"></div>
+            </div>
+            <span class="imp-pct">19.31%</span>
+          </div>
+          <div class="imp-row">
+            <span class="imp-var">metros_por_hab</span>
+            <div class="imp-bar-wrap">
+              <div class="imp-bar" style="width: 12%"></div>
+            </div>
+            <span class="imp-pct">5.68%</span>
+          </div>
+          <div class="imp-row">
+            <span class="imp-var">ascensor_S</span>
+            <div class="imp-bar-wrap">
+              <div class="imp-bar" style="width: 9%"></div>
+            </div>
+            <span class="imp-pct">4.37%</span>
+          </div>
+          <div class="imp-row">
+            <span class="imp-var">planta_num</span>
+            <div class="imp-bar-wrap">
+              <div class="imp-bar" style="width: 8%"></div>
+            </div>
+            <span class="imp-pct">3.78%</span>
+          </div>
+          <div class="imp-row">
+            <span class="imp-var">es_exterior</span>
+            <div class="imp-bar-wrap">
+              <div class="imp-bar" style="width: 6%"></div>
+            </div>
+            <span class="imp-pct">3.13%</span>
+          </div>
+          <div class="imp-row">
+            <span class="imp-var">ratio_banos</span>
+            <div class="imp-bar-wrap">
+              <div class="imp-bar" style="width: 5%"></div>
+            </div>
+            <span class="imp-pct">2.91%</span>
+          </div>
+          <div class="imp-row">
+            <span class="imp-var">habitaciones</span>
+            <div class="imp-bar-wrap">
+              <div class="imp-bar" style="width: 5%"></div>
+            </div>
+            <span class="imp-pct">2.65%</span>
+          </div>
+        </div>
+
+        <div
+          style="margin-top: 1.5rem; padding: 1.2rem; background: var(--accent-light); border-radius: 10px; border: 1px solid #e8c5bc;">
+          <div
+            style="font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--accent); margin-bottom: 0.4rem;">
+            Hallazgo clave</div>
+          <p style="font-size: 0.85rem; color: #8b3d25; line-height: 1.55;">Los metros cuadrados y la zona explican
+            conjuntamente más del <strong>68%</strong> de la capacidad predictiva del modelo, lo que confirma el mantra
+            del sector: <em>ubicación, ubicación, ubicación.</em></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ══ MODELO ════════════════════════════════════════ -->
+  <section id="modelo">
+    <div class="section-label">El modelo</div>
+    <h2 class="section-title">Por qué elegimos <em>XGBoost</em></h2>
+    <p class="section-desc">Tras comparar múltiples algoritmos, XGBoost demostró el mejor equilibrio entre precisión y
+      velocidad de entrenamiento para nuestro dataset de precios inmobiliarios.</p>
+
+    <div class="model-grid">
+      <div class="model-card">
+        <div class="model-card-icon">⚡</div>
+        <div class="model-card-title">Algoritmo</div>
+        <div class="model-card-value">XG<span class="accent">Boost</span></div>
+        <div class="model-card-desc">Gradient Boosting de árboles de decisión. Ganador de la mayoría de competiciones
+          Kaggle para datos tabulares estructurados.</div>
+      </div>
+      <div class="model-card">
+        <div class="model-card-icon">🎯</div>
+        <div class="model-card-title">R² Score</div>
+        <div class="model-card-value">0.<span class="accent">8606</span></div>
+        <div class="model-card-desc">El modelo explica el 86% de la varianza en los precios. Un resultado robusto para
+          datos inmobiliarios altamente heterogéneos.</div>
+      </div>
+      <div class="model-card">
+        <div class="model-card-icon">📐</div>
+        <div class="model-card-title">Error medio (MAE)</div>
+        <div class="model-card-value"><span class="accent">~191</span>k €</div>
+        <div class="model-card-desc">Error absoluto medio sobre el conjunto de test. Rango amplio debido a la gran
+          variabilidad de precios entre distritos de Madrid.</div>
+      </div>
+      <div class="model-card">
+        <div class="model-card-icon">🧮</div>
+        <div class="model-card-title">Variables</div>
+        <div class="model-card-value">13</div>
+        <div class="model-card-desc">13 features numéricas tras el proceso de ingeniería de características. Sin
+          variables categóricas directas (codificadas por target encoding).</div>
+      </div>
+    </div>
+
+    <div class="xgb-highlight">
+      <div>
+        <h3 class="xgb-title">Gradient Boosting:<br><em>ensembles</em> que aprenden de sus errores</h3>
+        <p class="xgb-desc">XGBoost construye árboles de decisión de forma secuencial: cada nuevo árbol se enfoca en
+          corregir los errores del anterior. El resultado es un ensemble altamente preciso que supera a modelos lineales
+          y redes neuronales poco profundas en datasets de tamaño medio con características heterogéneas como el
+          nuestro.</p>
+        <p class="xgb-desc" style="margin-top: 1rem;">Se añadió regularización L1 y L2 para evitar overfitting, algo
+          crítico cuando la zona (un factor dominante) puede sesgar el modelo hacia los distritos más caros.</p>
+      </div>
+      <div>
+        <div class="xgb-params">
+          <div class="xgb-param">
+            <span class="xgb-param-key">Librería</span>
+            <span class="xgb-param-val">xgboost 2.x</span>
+          </div>
+          <div class="xgb-param">
+            <span class="xgb-param-key">Encoding zona</span>
+            <span class="xgb-param-val">Target Encoder</span>
+          </div>
+          <div class="xgb-param">
+            <span class="xgb-param-key">Train / Test split</span>
+            <span class="xgb-param-val">80% / 20%</span>
+          </div>
+          <div class="xgb-param">
+            <span class="xgb-param-key">Serialización</span>
+            <span class="xgb-param-val">joblib (.joblib)</span>
+          </div>
+          <div class="xgb-param">
+            <span class="xgb-param-key">API</span>
+            <span class="xgb-param-val">FastAPI + Uvicorn</span>
+          </div>
+          <div class="xgb-param">
+            <span class="xgb-param-key">Validación</span>
+            <span class="xgb-param-val">R², MAE, Scatter</span>
+          </div>
+          <div class="xgb-param">
+            <span class="xgb-param-key">Dataset origen</span>
+            <span class="xgb-param-val">Idealista · Kaggle</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ══ DATOS ════════════════════════════════════════ -->
+  <section id="datos">
+    <div class="section-label">El dataset</div>
+    <h2 class="section-title">11.826 pisos reales de <em>Idealista</em></h2>
+    <p class="section-desc">Los datos proceden de un scraping de la plataforma Idealista.com, cubriendo los 21 distritos
+      del municipio de Madrid con anuncios publicados durante 2024-2025.</p>
+
+    <div class="data-cards">
+      <div class="data-card fade-in">
+        <div class="data-card-num">11<span>.</span>826</div>
+        <div class="data-card-label">Anuncios totales</div>
+        <div class="data-card-sub">Tras limpieza y eliminación de duplicados por zona, planta, habitaciones y precio.
+        </div>
+      </div>
+      <div class="data-card fade-in">
+        <div class="data-card-num">8<span>.</span>511</div>
+        <div class="data-card-label">Train set</div>
+        <div class="data-card-sub">El 80% de los datos se usó para entrenar el modelo XGBoost.</div>
+      </div>
+      <div class="data-card fade-in">
+        <div class="data-card-num">2<span>.</span>128</div>
+        <div class="data-card-label">Test set</div>
+        <div class="data-card-sub">El 20% restante, nunca visto por el modelo, se usó para evaluar la precisión.</div>
+      </div>
+      <div class="data-card fade-in">
+        <div class="data-card-num">14</div>
+        <div class="data-card-label">Columnas originales</div>
+        <div class="data-card-sub">Zona, precio, metros, habitaciones, ascensor, planta, baños, tags, descripción…</div>
+      </div>
+    </div>
+
+    <div style="margin-top: 2.5rem;">
+      <div
+        style="font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.8rem;">
+        Distritos de Madrid incluidos</div>
+      <div class="zonas-grid">
+        <span class="zona-tag">Arganzuela</span>
+        <span class="zona-tag">Barajas</span>
+        <span class="zona-tag">Carabanchel</span>
+        <span class="zona-tag">Centro</span>
+        <span class="zona-tag">Chamartín</span>
+        <span class="zona-tag">Chamberí</span>
+        <span class="zona-tag">Ciudad Lineal</span>
+        <span class="zona-tag">Fuencarral - El Pardo</span>
+        <span class="zona-tag">Hortaleza</span>
+        <span class="zona-tag">Latina</span>
+        <span class="zona-tag">Moncloa - Aravaca</span>
+        <span class="zona-tag">Moratalaz</span>
+        <span class="zona-tag">Puente de Vallecas</span>
+        <span class="zona-tag">Retiro</span>
+        <span class="zona-tag" style="background: var(--ink); color: var(--paper); border-color: var(--ink);">Salamanca
+          ★</span>
+        <span class="zona-tag">San Blas</span>
+        <span class="zona-tag">Tetuán</span>
+        <span class="zona-tag">Usera</span>
+        <span class="zona-tag">Vicálvaro</span>
+        <span class="zona-tag">Villa de Vallecas</span>
+        <span class="zona-tag">Villaverde</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ══ RESULTADOS ════════════════════════════════════ -->
+  <section id="resultados">
+    <div class="section-label">Resultados</div>
+    <h2 class="section-title">Un R² de <em>0.86</em> sobre datos no vistos</h2>
+    <p class="section-desc">El modelo fue evaluado sobre el 20% de datos de test que nunca participaron en el
+      entrenamiento. Los resultados confirman una capacidad predictiva sólida y consistente.</p>
+
+    <div class="metrics-showcase fade-in">
+      <div class="metric-block">
+        <div class="metric-val">0.<span>86</span></div>
+        <div class="metric-name">R² Score</div>
+        <div class="metric-note">El modelo explica el 86% de la varianza del precio. Excelente para datos inmobiliarios
+          heterogéneos.</div>
+      </div>
+      <div class="metric-block">
+        <div class="metric-val">~<span>191</span>k</div>
+        <div class="metric-name">Error medio (MAE)</div>
+        <div class="metric-note">Error absoluto medio en euros. Refleja la alta dispersión de precios entre distritos
+          premium y populares.</div>
+      </div>
+      <div class="metric-block">
+        <div class="metric-val"><span>80</span>%</div>
+        <div class="metric-name">Divisón train/test</div>
+        <div class="metric-note">Partición estratificada para garantizar representación de todos los distritos en ambos
+          conjuntos.</div>
+      </div>
+    </div>
+
+    <div class="scatter-visual fade-in">
+      <div class="scatter-title">Precios reales vs. predicciones XGBoost — conjunto de test</div>
+      <svg class="scatter-svg" viewBox="0 0 700 260" xmlns="http://www.w3.org/2000/svg">
+        <!-- Axes -->
+        <line x1="60" y1="20" x2="60" y2="220" stroke="#0f0e0c" stroke-width="1" opacity="0.2" />
+        <line x1="60" y1="220" x2="680" y2="220" stroke="#0f0e0c" stroke-width="1" opacity="0.2" />
+        <!-- Perfect line -->
+        <line x1="60" y1="220" x2="680" y2="20" stroke="#c8502a" stroke-width="1.5" stroke-dasharray="6,4"
+          opacity="0.6" />
+        <!-- Grid lines -->
+        <line x1="60" y1="170" x2="680" y2="170" stroke="#0f0e0c" stroke-width="0.5" opacity="0.08" />
+        <line x1="60" y1="120" x2="680" y2="120" stroke="#0f0e0c" stroke-width="0.5" opacity="0.08" />
+        <line x1="60" y1="70" x2="680" y2="70" stroke="#0f0e0c" stroke-width="0.5" opacity="0.08" />
+        <!-- Axis labels -->
+        <text x="370" y="250" text-anchor="middle" font-family="Syne, sans-serif" font-size="10" fill="#6b6760">Precio
+          Real (€)</text>
+        <text x="20" y="130" text-anchor="middle" font-family="Syne, sans-serif" font-size="10" fill="#6b6760"
+          transform="rotate(-90, 20, 130)">Predicción XGBoost (€)</text>
+        <!-- Scatter points - simulated realistic distribution around the diagonal -->
+        <circle cx="90" cy="200" r="3" fill="#0f0e0c" opacity="0.35" />
+        <circle cx="105" cy="195" r="3" fill="#0f0e0c" opacity="0.35" />
+        <circle cx="120" cy="185" r="3" fill="#0f0e0c" opacity="0.35" />
+        <circle cx="135" cy="175" r="3" fill="#0f0e0c" opacity="0.35" />
+        <circle cx="150" cy="190" r="3" fill="#0f0e0c" opacity="0.35" />
+        <circle cx="165" cy="170" r="3" fill="#0f0e0c" opacity="0.35" />
+        <circle cx="180" cy="165" r="3" fill="#0f0e0c" opacity="0.35" />
+        <circle cx="195" cy="158" r="3" fill="#0f0e0c" opacity="0.35" />
+        <circle cx="210" cy="152" r="3" fill="#0f0e0c" opacity="0.35" />
+        <circle cx="225" cy="165" r="3" fill="#0f0e0c" opacity="0.35" />
+        <circle cx="240" cy="148" r="3" fill="#0f0e0c" opacity="0.35" />
+        <circle cx="255" cy="140" r="3" fill="#0f0e0c" opacity="0.35" />
+        <circle cx="270" cy="135" r="3" fill="#0f0e0c" opacity="0.35" />
+        <circle cx="285" cy="130" r="3" fill="#0f0e0c" opacity="0.35" />
+        <circle cx="300" cy="145" r="3" fill="#0f0e0c" opacity="0.35" />
+        <circle cx="315" cy="118" r="3" fill="#0f0e0c" opacity="0.35" />
+        <circle cx="330" cy="112" r="3" fill="#0f0e0c" opacity="0.35" />
+        <circle cx="345" cy="125" r="3" fill="#0f0e0c" opacity="0.35" />
+        <circle cx="360" cy="105" r="3" fill="#0f0e0c" opacity="0.35" />
+        <circle cx="375" cy="98" r="3" fill="#0f0e0c" opacity="0.35" />
+        <circle cx="390" cy="92" r="3" fill="#0f0e0c" opacity="0.35" />
+        <circle cx="405" cy="110" r="3" fill="#0f0e0c" opacity="0.35" />
+        <circle cx="420" cy="85" r="3" fill="#0f0e0c" opacity="0.35" />
+        <circle cx="435" cy="78" r="3" fill="#0f0e0c" opacity="0.35" />
+        <circle cx="450" cy="72" r="3" fill="#0f0e0c" opacity="0.35" />
+        <circle cx="465" cy="90" r="3" fill="#0f0e0c" opacity="0.35" />
+        <circle cx="480" cy="60" r="3" fill="#0f0e0c" opacity="0.35" />
+        <circle cx="495" cy="55" r="3" fill="#0f0e0c" opacity="0.35" />
+        <circle cx="510" cy="48" r="3" fill="#0f0e0c" opacity="0.35" />
+        <circle cx="525" cy="68" r="3" fill="#0f0e0c" opacity="0.35" />
+        <circle cx="540" cy="40" r="3" fill="#0f0e0c" opacity="0.35" />
+        <circle cx="555" cy="35" r="3" fill="#0f0e0c" opacity="0.35" />
+        <circle cx="570" cy="52" r="3" fill="#0f0e0c" opacity="0.35" />
+        <circle cx="585" cy="28" r="3" fill="#0f0e0c" opacity="0.35" />
+        <circle cx="600" cy="24" r="3" fill="#0f0e0c" opacity="0.35" />
+        <circle cx="615" cy="42" r="3" fill="#0f0e0c" opacity="0.35" />
+        <circle cx="630" cy="18" r="3" fill="#0f0e0c" opacity="0.35" />
+        <!-- A few outlier points in accent -->
+        <circle cx="200" cy="100" r="3" fill="#c8502a" opacity="0.6" />
+        <circle cx="350" cy="68" r="3" fill="#c8502a" opacity="0.6" />
+        <circle cx="490" cy="30" r="3" fill="#c8502a" opacity="0.6" />
+        <circle cx="280" cy="180" r="3" fill="#c8502a" opacity="0.6" />
+        <!-- Legend -->
+        <line x1="430" y1="240" x2="455" y2="240" stroke="#c8502a" stroke-width="1.5" stroke-dasharray="4,3" />
+        <text x="460" y="243" font-family="Syne, sans-serif" font-size="9" fill="#6b6760">Predicción perfecta</text>
+        <circle cx="565" cy="240" r="3" fill="#0f0e0c" opacity="0.4" />
+        <text x="573" y="243" font-family="Syne, sans-serif" font-size="9" fill="#6b6760">Muestra test</text>
+        <circle cx="630" cy="240" r="3" fill="#c8502a" opacity="0.7" />
+        <text x="638" y="243" font-family="Syne, sans-serif" font-size="9" fill="#6b6760">Outlier</text>
+      </svg>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ══ CALCULADORA ═══════════════════════════════════ -->
+  <section id="calculadora">
+    <div class="section-label">Demo interactiva</div>
+    <h2 class="section-title">Prueba el modelo en <em>tiempo real</em></h2>
+    <p class="section-desc">Introduce las características de cualquier piso de Madrid y el modelo XGBoost estimará su
+      precio de venta en milisegundos a través de la API REST.</p>
+
+    <div class="calc-wrapper">
+      <!-- Form -->
+      <div>
+        <div class="calc-form-card">
+          <div class="calc-form-header">
+            <div class="form-dot dot-red"></div>
+            <div class="form-dot dot-yellow"></div>
+            <div class="form-dot dot-green"></div>
+            <span style="font-size: 0.78rem; color: var(--muted); margin-left: 8px; font-weight: 500;">ProphetAI ·
+              Predictor</span>
+          </div>
+          <div class="calc-form-body">
+            <div class="form-grid">
+              <div class="form-field full">
+                <label class="form-label">Distrito / Zona</label>
+                <select id="zona" class="form-input">
+                  <option value="arganzuela">Arganzuela</option>
+                  <option value="barajas">Barajas</option>
+                  <option value="carabanchel">Carabanchel</option>
+                  <option value="centro">Centro</option>
+                  <option value="chamartin">Chamartín</option>
+                  <option value="chamberi">Chamberí</option>
+                  <option value="ciudad-lineal">Ciudad Lineal</option>
+                  <option value="fuencarral-el-pardo">Fuencarral - El Pardo</option>
+                  <option value="hortaleza">Hortaleza</option>
+                  <option value="latina">Latina</option>
+                  <option value="moncloa-aravaca">Moncloa - Aravaca</option>
+                  <option value="moratalaz">Moratalaz</option>
+                  <option value="puente-de-vallecas">Puente de Vallecas</option>
+                  <option value="retiro">Retiro</option>
+                  <option value="salamanca" selected>Salamanca</option>
+                  <option value="san-blas">San Blas</option>
+                  <option value="tetuan">Tetuán</option>
+                  <option value="usera">Usera</option>
+                  <option value="vicalvaro">Vicálvaro</option>
+                  <option value="villa-de-vallecas">Villa de Vallecas</option>
+                  <option value="villaverde">Villaverde</option>
+                </select>
+              </div>
+              <div class="form-field">
+                <label class="form-label">Metros cuadrados</label>
+                <input type="number" id="metros" value="80" min="20" max="500" class="form-input">
+              </div>
+              <div class="form-field">
+                <label class="form-label">Habitaciones</label>
+                <input type="number" id="habitaciones" value="2" min="1" max="9" class="form-input">
+              </div>
+              <div class="form-field">
+                <label class="form-label">Baños</label>
+                <input type="number" id="banos" value="1" min="1" max="5" class="form-input">
+              </div>
+              <div class="form-field">
+                <label class="form-label">Número de planta</label>
+                <input type="number" id="planta" value="2" min="0" max="30" class="form-input">
+              </div>
+            </div>
+
+            <div
+              style="font-size: 0.72rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px;">
+              Características adicionales</div>
+            <div class="toggles-wrap">
+              <div class="toggle-card" data-id="ascensor">
+                <div class="toggle-cb">✓</div>
+                <span class="toggle-text">Ascensor</span>
+                <span class="toggle-icon" style="font-size: 14px;">🛗</span>
+              </div>
+              <div class="toggle-card" data-id="exterior">
+                <div class="toggle-cb">✓</div>
+                <span class="toggle-text">Exterior</span>
+                <span class="toggle-icon" style="font-size: 14px;">☀️</span>
+              </div>
+              <div class="toggle-card" data-id="garaje">
+                <div class="toggle-cb">✓</div>
+                <span class="toggle-text">Garaje</span>
+                <span class="toggle-icon" style="font-size: 14px;">🚗</span>
+              </div>
+              <div class="toggle-card" data-id="reformado">
+                <div class="toggle-cb">✓</div>
+                <span class="toggle-text">Reformado</span>
+                <span class="toggle-icon" style="font-size: 14px;">🔨</span>
+              </div>
+            </div>
+
+            <button class="btn-calc" id="calcBtn" onclick="calcular()">Estimar precio con IA →</button>
+            <div class="error-box" id="errorBox"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Result panel -->
+      <div>
+        <div class="result-panel">
+          <div class="result-hero">
+            <div id="resultContent" class="result-placeholder">
+              <div class="placeholder-icon">🏠</div>
+              <p class="placeholder-text">Rellena el formulario y pulsa<br><strong
+                  style="color: rgba(245,242,235,0.7);">Estimar precio</strong> para ver la predicción</p>
+            </div>
+          </div>
+          <div class="result-body" id="resultBody" style="display: none;">
+            <div class="result-meta-grid">
+              <div class="meta-card">
+                <div class="meta-card-label">Zona</div>
+                <div class="meta-card-val" id="metaZona">—</div>
+              </div>
+              <div class="meta-card">
+                <div class="meta-card-label">Superficie</div>
+                <div class="meta-card-val" id="metaMetros">—</div>
+              </div>
+              <div class="meta-card">
+                <div class="meta-card-label">Habitaciones</div>
+                <div class="meta-card-val" id="metaHabs">—</div>
+              </div>
+              <div class="meta-card">
+                <div class="meta-card-label">Planta</div>
+                <div class="meta-card-val" id="metaPlanta">—</div>
+              </div>
+            </div>
+            <p class="result-disclaimer">Estimación generada por el modelo XGBoost entrenado sobre datos de Idealista.
+              No constituye una tasación oficial.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ FOOTER ════════════════════════════════════════ -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#hero" class="nav-brand" style="margin-bottom: 0.8rem; display: inline-flex;">
+          <div class="nav-logo">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke="#f5f2eb" stroke-width="1.5"
+                stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M9 22V12h6v10" stroke="#f5f2eb" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </div>
+          <span class="brand-name" style="color: var(--paper);">Prophet<span style="color: #c8a47a;">AI</span></span>
+        </a>
+        <p>Sistema de predicción de precios inmobiliarios en Madrid mediante Machine Learning. Trabajo Fin de Grado —
+          2026.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Secciones</h4>
+        <ul>
+          <li><a href="#metodologia" style="color: inherit; text-decoration: none;">Metodología</a></li>
+          <li><a href="#variables" style="color: inherit; text-decoration: none;">Variables</a></li>
+          <li><a href="#modelo" style="color: inherit; text-decoration: none;">El modelo XGBoost</a></li>
+          <li><a href="#datos" style="color: inherit; text-decoration: none;">El dataset</a></li>
+          <li><a href="#resultados" style="color: inherit; text-decoration: none;">Resultados</a></li>
+          <li><a href="#calculadora" style="color: inherit; text-decoration: none;">Demo interactiva</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Stack tecnológico</h4>
+        <ul>
+          <li>Python 3.12</li>
+          <li>XGBoost 2.x</li>
+          <li>Scikit-learn</li>
+          <li>Pandas · NumPy</li>
+          <li>FastAPI + Uvicorn</li>
+          <li>Kaggle (dataset)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 ProphetAI — Trabajo Fin de Grado. Dataset: Idealista Madrid (Kaggle).</span>
+      <div class="footer-tech-stack">
+        <span class="tech-pill">Python</span>
+        <span class="tech-pill">XGBoost</span>
+        <span class="tech-pill">FastAPI</span>
+        <span class="tech-pill">R² 0.86</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Toggle cards
+    document.querySelectorAll('.toggle-card').forEach(el => {
+      el.addEventListener('click', () => el.classList.toggle('on'));
+    });
+
+    function isOn(id) {
+      return document.querySelector(`.toggle-card[data-id="${id}"]`).classList.contains('on') ? 1 : 0;
+    }
+
+    // Intersection observer for fade-in
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    async function calcular() {
+      const btn = document.getElementById('calcBtn');
+      const errBox = document.getElementById('errorBox');
+      errBox.classList.remove('show');
+
+      const metros = parseFloat(document.getElementById('metros').value) || 80;
+      const habs = parseInt(document.getElementById('habitaciones').value) || 2;
+      const banos = parseInt(document.getElementById('banos').value) || 1;
+      const planta = parseInt(document.getElementById('planta').value) || 1;
+      const zonaEl = document.getElementById('zona');
+      const zona = zonaEl.value;
+      const zonaNombre = zonaEl.options[zonaEl.selectedIndex].text;
+
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner"></span>Calculando…';
+
+      const payload = {
+        metros, habitaciones: habs, baños: banos, zona,
+        ascensor_S: isOn('ascensor'),
+        es_exterior: isOn('exterior'),
+        planta_num: planta,
+        extra_piscina: 0,
+        extra_terraza: 0,
+        extra_garaje: isOn('garaje'),
+        extra_reformado: isOn('reformado'),
+        metros_por_hab: metros / (habs || 1),
+        ratio_banos: banos / (habs || 1)
+      };
+
+      try {
+        const res = await fetch('http://127.0.0.1:8000/prever', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.detail || 'Error del servidor');
+
+        const precio = data["Precio estimado"];
+        const fmt = n => new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n);
+
+        document.getElementById('resultContent').innerHTML = `
+          <div style="text-align: center; padding: 2.5rem;">
+            <div class="result-label-sm">Precio estimado</div>
+            <div class="result-price">${fmt(precio)}</div>
+            <div class="result-sqm">${fmt(Math.round(precio / metros))} / m²</div>
+          </div>`;
+
+        document.getElementById('metaZona').textContent = zonaNombre;
+        document.getElementById('metaMetros').textContent = metros + ' m²';
+        document.getElementById('metaHabs').textContent = habs + (habs === 1 ? ' hab.' : ' habs.');
+        document.getElementById('metaPlanta').textContent = planta === 0 ? 'Baja' : planta + 'ª';
+        document.getElementById('resultBody').style.display = 'block';
+
+      } catch (err) {
+        errBox.textContent = err.message.includes('fetch') ? '⚠ No se pudo conectar con el servidor. Comprueba que uvicorn esté corriendo en localhost:8000.' : '⚠ ' + err.message;
+        errBox.classList.add('show');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = 'Estimar precio con IA →';
+      }
+    }
+  </script>
+</body>
+
+</html>
