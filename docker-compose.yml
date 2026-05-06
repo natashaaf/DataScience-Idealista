@@ -1,11 +1,21 @@
 services:
-  mongodb:
+  db:
     image: mongo:latest
-    container_name: mongo-idealista
+    container_name: mongodb_madrid
     ports:
-      - "8001:27017"
+      - "27018:27017"
     volumes:
       - mongo_data:/data/db
 
+  api:
+    build: .
+    container_name: fastapi_app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - MONGO_URL=mongodb://db:27017#
 volumes:
   mongo_data:
+
