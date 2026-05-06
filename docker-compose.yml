@@ -1,0 +1,21 @@
+services:
+  db:
+    image: mongo:latest
+    container_name: mongodb_madrid
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  api:
+    build: .
+    container_name: fastapi_app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - MONGO_URL=mongodb://db:27017
+
+volumes:
+  mongo_data:

@@ -2,6 +2,11 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 import joblib
 import pandas as pd
+
+import motor.motor_asyncio
+import datetime
+import os
+
 from pathlib import Path
 from pydantic import Field
 from fastapi import HTTPException
@@ -19,6 +24,12 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Conexión a MongoDB (usando la variable de entorno de Docker)
+MONGO_URL = os.getenv("MONGO_URL", "mongodb://localhost:27017")
+client = motor.motor_asyncio.AsyncIOMotorClient(MONGO_URL)
+database = client.inmuebles_db
+collection = database.busquedas
 
 
 MODEL_PATH = Path(__file__).resolve().parent / 'modelo_idealista_v1.joblib'
@@ -70,9 +81,9 @@ ZONAS_CODE_MAP = {
 
 # 3. Crea la ruta de previsión
 @app.post("/prever")
-def predecir_precio(datos: DatosInmueble):
+async def predecir_precio(datos: DatosInmueble):
     data = datos.model_dump()
-    zona_nombre = data.pop("zona").strip().lower()
+    zona_nombre = data.get("zona").strip().lower()
 
     if zona_nombre not in ZONAS_CODE_MAP:
         zonas_validas = ", ".join(sorted(ZONAS_CODE_MAP.keys()))
