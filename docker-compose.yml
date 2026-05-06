@@ -3,7 +3,7 @@ services:
     image: mongo:latest
     container_name: mongo-idealista
     ports:
-      - "8001:27017"
+      - "27017:27017"
     volumes:
       - mongo_data:/data/db
 
