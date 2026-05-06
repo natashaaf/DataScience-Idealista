@@ -1,26 +1,18 @@
-import os
-import time
-from datetime import datetime
-from pymongo import MongoClient
-from fastapi import FastAPI, HTTPException
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import HTMLResponse
-from pydantic import BaseModel, Field
+from fastapi import FastAPI
+from pydantic import BaseModel
 import joblib
 import pandas as pd
-from pathlib import Path
 
-# Conexión MongoDB
-MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017")
-client = MongoClient(MONGO_URI, serverSelectionTimeoutMS=5000)
-try:
-    client.server_info()
-    db = client["db_idealista"]
-    collection = db["historico_predicciones"]
-    print("MongoDB: conexión establecida.")
-except Exception as e:
-    print(f"No se pudo conectar a MongoDB: {e}")
-    collection = None
+import motor.motor_asyncio
+import datetime
+import os
+
+from pathlib import Path
+from pydantic import Field
+from fastapi import HTTPException
+
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import HTMLResponse
 
 app = FastAPI()
 
@@ -33,8 +25,17 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Conexión a MongoDB (usando la variable de entorno de Docker)
+MONGO_URL = os.getenv("MONGO_URL", "mongodb://db:27017")
+client = motor.motor_asyncio.AsyncIOMotorClient(MONGO_URL)
+database = client.inmuebles_db
+collection = database.busquedas
+
+
 MODEL_PATH = Path(__file__).resolve().parent / 'modelo_idealista_v1.joblib'
 model = joblib.load(MODEL_PATH)
+
+
 
 class DatosInmueble(BaseModel):
     metros: float
@@ -51,7 +52,9 @@ class DatosInmueble(BaseModel):
     metros_por_hab: float
     ratio_banos: float
 
+
 # --- DICCIONARIO DE BARRIOS ---
+# Usa los mismos valores de codificacion de zona del entrenamiento
 ZONAS_CODE_MAP = {
     "arganzuela": 125400.45,
     "barajas": 98200.12,
@@ -76,21 +79,18 @@ ZONAS_CODE_MAP = {
     "villaverde": 72400.25,
 }
 
-# 3. Ruta de previsión
+# 3. Crea la ruta de previsión
 @app.post("/prever")
-def predecir_precio(datos: DatosInmueble):
-    payload = datos.model_dump()
-    # Guardamos una copia del input tal como vino
-    input_payload = payload.copy()
-    zona_nombre = input_payload.pop("zona").strip().lower()
+async def predecir_precio(datos: DatosInmueble):
+    data = datos.model_dump()
+    zona_nombre = data.get("zona").strip().lower()
 
     if zona_nombre not in ZONAS_CODE_MAP:
         zonas_validas = ", ".join(sorted(ZONAS_CODE_MAP.keys()))
-        raise HTTPException(status_code=400, detail=f"Zona no válida: {zona_nombre}. Usa una de estas: {zonas_validas}")
+        raise HTTPException(status_code=400, detail=f"Zona no valida: {zona_nombre}. Usa una de estas: {zonas_validas}")
 
-    # Codificamos la zona para el modelo
-    input_payload["zona_codificada"] = ZONAS_CODE_MAP[zona_nombre]
-    df = pd.DataFrame([input_payload])
+    data["zona_codificada"] = ZONAS_CODE_MAP[zona_nombre]
+    df = pd.DataFrame([data])
 
     # Orden exacto que espera el modelo
     orden_modelo = [
@@ -105,27 +105,12 @@ def predecir_precio(datos: DatosInmueble):
     except KeyError:
         raise HTTPException(status_code=400, detail="Faltan columnas en el JSON enviado.")
     
-    # Predicción (medimos tiempo de inferencia)
-    start = time.perf_counter()
-    prediccion = model.predict(df)
-    inference_ms = (time.perf_counter() - start) * 1000.0
-    precio = float(prediccion[0])
+    # Predicion
+    predicion = model.predict(df)
+    
+    return {"Precio estimado": float(predicion[0])}
 
-    # Registro en MongoDB
-    if collection is not None:
-        doc = {
-            "input": datos.model_dump(),
-            "prediction": precio,
-            "model": "XGBoost_v1",
-            "timestamp": datetime.utcnow(),
-            "inference_ms": round(inference_ms, 2)
-        }
-        try:
-            collection.insert_one(doc)
-        except Exception as e:
-            print(f"Error al guardar en MongoDB: {e}")
 
-    return {"Precio estimado": precio}
 
 @app.get("/", response_class=HTMLResponse)
 def leer_front():
@@ -135,15 +120,8 @@ def leer_front():
             return f.read()
     except FileNotFoundError:
         return "<h1>Error: No se encontró el archivo index.html</h1>"
-
-# Endpoint para historial de predicciones
-@app.get("/historico")
-async def obtener_historico():
-    if collection is None:
-        return {"error": "MongoDB no está conectado."}
-    try:
-        # Recuperar historial
-        resultados = list(collection.find({}, {"_id": 0}))
-        return {"historial": resultados}
-    except Exception as e:
-        return {"error": str(e)}
+"""
+@app.get("/")
+def inicio():
+    return {"mensaje": "Bienvenido a la API de predicción de precios de inmuebles"}
+"""

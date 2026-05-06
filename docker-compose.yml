@@ -2,20 +2,30 @@ services:
   db:
     image: mongo:latest
     container_name: mongodb_madrid
+    restart: always
     ports:
       - "27018:27017"
     volumes:
       - mongo_data:/data/db
 
   api:
-    build: .
+    build: ./backend
     container_name: fastapi_app
+    restart: always
     ports:
       - "8000:8000"
     depends_on:
       - db
     environment:
-      - MONGO_URL=mongodb://db:27017#
-volumes:
-  mongo_data:
+      - MONGO_URL=mongodb://db:27017/inmuebles_db
 
+  frontend:
+    image: nginx:alpine
+    container_name: idealista_front
+    ports:
+      - "80:80"
+    volumes:
+      - ./frontend:/usr/share/nginx/html # Monta tu carpeta local en el servidor web
+
+volumes:
+  mongo_data:      
