@@ -17,8 +17,8 @@ Gracias a Docker, puedes desplegar todo el entorno (Backend, Frontend y Base de 
 ### Pasos para arrancar
 1. **Clona el repositorio:**
    ```bash
-   git clone [https://github.com/tu-usuario/nombre-del-repo.git](https://github.com/natashaaf/DataScience-Idealista.git)
-   cd nombre-del-repo
+   git clone https://github.com/natashaaf/DataScience-Idealista.git
+   cd DataScience-Idealista
 
 ### Como ejecutar
 
@@ -50,6 +50,13 @@ Contenedores: Docker & Docker Compose
 Frontend: HTML5, CSS3 y JavaScript Vanilla.
 
 
+-------------------------------------------------------
+EQUIPO DEL PROYECTO:
+Angel 
+Juan Gabriel
+Natasha
+
+
 ------------------------------------------------- 
             ENGLISH INSTRUCTIONS 
 -------------------------------------------------
@@ -71,8 +78,8 @@ Have Docker and Docker Compose installed.
 Clone the repository:
 
 Bash
-git clone [https://github.com/your-username/repo-name.git](https://github.com/natashaaf/DataScience-Idealista.git)
-cd repo-name
+git clone https://github.com/natashaaf/DataScience-Idealista.git
+cd DataScience-Idealista
 
 
 ### Start the services:
@@ -101,3 +108,10 @@ Database: MongoDB (for search history)
 Containers: Docker & Docker Compose
 
 Frontend: HTML5, CSS3, and Vanilla JavaScript.
+
+------------------------------------------------
+
+PROJECT TEAM:
+Angel 
+Juan Gabriel
+Natasha
