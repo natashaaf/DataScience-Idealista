@@ -52,9 +52,12 @@ Frontend: HTML5, CSS3 y JavaScript Vanilla.
 
 -------------------------------------------------------
 EQUIPO DEL PROYECTO:
-Angel 
-Juan Gabriel
-Natasha
+
+@devmtziglangel
+
+@JuanGabrielCallejo
+
+@natashaaf
 
 
 ------------------------------------------------- 
@@ -112,6 +115,9 @@ Frontend: HTML5, CSS3, and Vanilla JavaScript.
 ------------------------------------------------
 
 PROJECT TEAM:
-Angel 
-Juan Gabriel
-Natasha
+
+@devmtziglangel
+
+@JuanGabrielCallejo
+
+@natashaaf
