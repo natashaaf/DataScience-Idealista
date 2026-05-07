@@ -11,8 +11,8 @@ from pathlib import Path
 from pydantic import Field
 from fastapi import HTTPException
 
-from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
@@ -92,13 +92,37 @@ async def predecir_precio(datos: DatosInmueble):
     data["zona_codificada"] = ZONAS_CODE_MAP[zona_nombre]
     df = pd.DataFrame([data])
 
-    # Orden exacto que espera el modelo
+    # 1. Orden exacto que espera el modelo
     orden_modelo = [
         "metros", "habitaciones", "baños", "zona_codificada",
         "ascensor_S", "es_exterior", "planta_num",
         "extra_piscina", "extra_terraza", "extra_garaje",
         "extra_reformado", "metros_por_hab", "ratio_banos"
     ]
+
+    try:
+        df = df[orden_modelo]
+        
+        # 2. Realizar la predicción
+        prediccion = model.predict(df)
+        precio_estimado = float(prediccion[0])
+
+        # 3. Preparar el documento para MongoDB
+        # Guardamos los datos de entrada + el resultado + la fecha
+        documento_mongo = data.copy()
+        documento_mongo["precio_estimado"] = precio_estimado
+        documento_mongo["fecha"] = datetime.datetime.now()
+
+        # 4. INSERTAR EN LA BASE DE DATOS (Crucial para el histórico)
+        await collection.insert_one(documento_mongo)
+
+        # 5. Devolver la respuesta al front
+        return {"Precio estimado": precio_estimado}
+
+    except KeyError:
+        raise HTTPException(status_code=400, detail="Faltan columnas en el JSON enviado.")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error en la predicción o guardado: {str(e)}")
 
     try:
         df = df[orden_modelo]
@@ -120,6 +144,19 @@ def leer_front():
             return f.read()
     except FileNotFoundError:
         return "<h1>Error: No se encontró el archivo index.html</h1>"
+    
+
+@app.get("/historico")
+async def obtener_historico():
+    if collection is None:
+        return {"error": "MongoDB no está conectado."}
+    try:
+        # Usar 'to_list' con 'await' para recuperar los documentos de forma asíncrona
+        # El 1000 es el límite de documentos a recuperar
+        resultados = await collection.find({}, {"_id": 0}).to_list(length=1000)
+        return {"historial": resultados}
+    except Exception as e:
+        return {"error": str(e)}
 """
 @app.get("/")
 def inicio():

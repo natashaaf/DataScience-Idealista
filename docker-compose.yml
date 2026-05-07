@@ -1,13 +1,11 @@
 services:
-  db:
-    image: mongo:latest
-    container_name: mongodb_madrid
-    restart: always
+  frontend:
+    image: nginx:alpine
+    container_name: idealista_front
     ports:
-      - "27018:27017"
+      - "80:80"
     volumes:
-      - mongo_data:/data/db
-
+      - ./frontend:/usr/share/nginx/html # Monta tu carpeta local en el servidor web
   api:
     build: ./backend
     container_name: fastapi_app
@@ -18,14 +16,16 @@ services:
       - db
     environment:
       - MONGO_URL=mongodb://db:27017/inmuebles_db
-
-  frontend:
-    image: nginx:alpine
-    container_name: idealista_front
+  db:
+    image: mongo:latest
+    container_name: mongodb_madrid
+    restart: always
     ports:
-      - "80:80"
+      - "27018:27017"
     volumes:
-      - ./frontend:/usr/share/nginx/html # Monta tu carpeta local en el servidor web
+      - mongo_data:/data/db
+
+
 
 volumes:
   mongo_data:      
