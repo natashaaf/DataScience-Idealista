@@ -1,4 +1,4 @@
-# ProphetAI — Predicción de Precios Inmobiliarios (Madrid) 🏠🤖
+# ProphetAI — Predicción de Precios Inmobiliarios (Madrid) 
 
 [English version below](#english)
 
@@ -6,7 +6,7 @@ ProphetAI es una herramienta interactiva diseñada para estimar el precio de ven
 
 Este proyecto fue desarrollado como parte de un Trabajo de Fin de Año por un equipo de estudiantes de DAW, integrando un stack tecnológico moderno y despliegue mediante contenedores.
 
-## 🚀 Instalación y Uso
+##  Instalación y Uso
 
 Gracias a Docker, puedes desplegar todo el entorno (Backend, Frontend y Base de Datos) con un solo comando.
 
@@ -52,12 +52,12 @@ Frontend: HTML5, CSS3 y JavaScript Vanilla.
 
 ------------------------ ENGLISH INSTRUCTIONS ---------------------------
 
-ProphetAI — Real Estate Price Prediction (Madrid) 🏠🤖
+ProphetAI — Real Estate Price Prediction (Madrid) 
 ProphetAI is an interactive tool designed to estimate property sale prices in Madrid. It uses a Machine Learning model (XGBoost) trained on real market data to provide accurate predictions based on features such as square footage, neighborhood, number of rooms, and extras (swimming pool, garage, etc.).
 
 This project was developed as part of a Final Degree Project, integrating a modern tech stack and containerized deployment.
 
-## 🚀 Installation and Usage
+##  Installation and Usage
 Thanks to Docker, you can deploy the entire environment (Backend, Frontend, and Database) with a single command.
 
 ### Prerequisites
