@@ -17,7 +17,7 @@ Gracias a Docker, puedes desplegar todo el entorno (Backend, Frontend y Base de 
 ### Pasos para arrancar
 1. **Clona el repositorio:**
    ```bash
-   git clone [https://github.com/tu-usuario/nombre-del-repo.git](https://github.com/tu-usuario/nombre-del-repo.git)
+   git clone [https://github.com/tu-usuario/nombre-del-repo.git](https://github.com/natashaaf/DataScience-Idealista.git)
    cd nombre-del-repo
 
 ### Como ejecutar
@@ -29,7 +29,7 @@ docker compose up -d
 
 ### Accede a la aplicación:
 
-Frontend: Abre tu navegador en http://localhost:8000.
+Frontend: Abre tu navegador en http://localhost
 
 API (FastAPI Docs): Si quieres probar los endpoints manualmente, ve a http://localhost:8000/historico
 
@@ -50,7 +50,9 @@ Contenedores: Docker & Docker Compose
 Frontend: HTML5, CSS3 y JavaScript Vanilla.
 
 
------------------------- ENGLISH INSTRUCTIONS ---------------------------
+------------------------------------------------- 
+            ENGLISH INSTRUCTIONS 
+-------------------------------------------------
 
 ProphetAI — Real Estate Price Prediction (Madrid) 
 ProphetAI is an interactive tool designed to estimate property sale prices in Madrid. It uses a Machine Learning model (XGBoost) trained on real market data to provide accurate predictions based on features such as square footage, neighborhood, number of rooms, and extras (swimming pool, garage, etc.).
@@ -69,7 +71,7 @@ Have Docker and Docker Compose installed.
 Clone the repository:
 
 Bash
-git clone [https://github.com/your-username/repo-name.git](https://github.com/your-username/repo-name.git)
+git clone [https://github.com/your-username/repo-name.git](https://github.com/natashaaf/DataScience-Idealista.git)
 cd repo-name
 
 
@@ -81,7 +83,7 @@ docker compose up -d
 
 ### Access the application:
 
-Frontend: Open your browser at http://localhost:8000.
+Frontend: Open your browser at http://localhost
 
 API (FastAPI Docs): To test endpoints manually, go to http://localhost:8000/historico.
 
